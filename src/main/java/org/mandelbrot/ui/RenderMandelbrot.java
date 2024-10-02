@@ -10,7 +10,8 @@ public class RenderMandelbrot extends JComponent {
     int WIDTH = 1200;
     int HEIGHT = 1000;
 
-    public final double startX = -2.4;
+    public final double startXPoint = -2.4;
+    public final double startYPoint = 1.6;
     public final double complexPlaneWidth = 3.6;
     public final double complexPlaneHeight = 3;
     public  final double dx = complexPlaneWidth/(WIDTH-1);
@@ -40,11 +41,12 @@ public class RenderMandelbrot extends JComponent {
 
                 // set buffer color based on the result
                 if (result.isMandelbrot()) {
-                    Color black = new Color(0, 0, 0);
+                    Color black = new Color(255, 255, 255);
                     buffer.setRGB(x, y, black.getRGB());
                 } else {
-                    Color  white   = new Color(100, result.getIterations() * 2,  100);
-                    buffer.setRGB(x, y, white.getRGB());
+                    Color  backgroundGradiant   =
+                            new Color(result.getIterations() * 2, result.getIterations() * 2, result.getIterations() * 2);
+                    buffer.setRGB(x, y, backgroundGradiant.getRGB());
                 }
 
             }
@@ -54,8 +56,8 @@ public class RenderMandelbrot extends JComponent {
 
     public ComplexNumber realToComplex(int x, int y){
 
-        double real = startX + x*dx;
-        double imaginary = 2 - y*dy;
+        double real = startXPoint + x*dx;
+        double imaginary = startYPoint - y*dy;
         return new ComplexNumber(real, imaginary);
     }
 
